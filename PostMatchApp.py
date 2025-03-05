@@ -75,7 +75,7 @@ def get_fotmob_table_data(lg):
 
      return indexdf, logos
 
- def create_fotmob_table_img(lg, date, indexdf, logos):
+def create_fotmob_table_img(lg, date, indexdf, logos):
      plt.clf()
      sns.set(rc={'axes.facecolor':'#fbf9f4', 'figure.facecolor':'#fbf9f4',
                 'ytick.labelcolor':'#4A2E19', 'xtick.labelcolor':'#4A2E19'})
