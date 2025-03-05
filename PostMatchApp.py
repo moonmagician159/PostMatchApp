@@ -132,10 +132,12 @@ def create_fotmob_table_img(lg, date, indexdf, logos):
      ax_width = abs(ax_point_1[0] - ax_point_2[0])
      ax_height = abs(ax_point_1[1] - ax_point_2[1])
      def ax_logo(link, ax):
-         club_icon = Image.open(urllib.request.urlopen(link))
-         ax.imshow(club_icon)
-         ax.axis('off')
-         return ax
+        response = requests.get(link, stream=True)
+        response.raise_for_status()
+        club_icon = Image.open(io.BytesIO(response.content))
+        ax.imshow(club_icon)
+        ax.axis('off')
+        return ax
 
      for x in range(0, nrows):
          ax_coords = DC_to_NFC([0, x + .25])
@@ -210,12 +212,12 @@ with st.sidebar:
 
     focal_color = st.color_picker("Pick a color to highlight the team on League Ranking tab", "#4c94f6")
 
- try:
+try:
      with st.sidebar:
          st.write(f"{lgg} Table (via FotMob)")
          table_indexdf, table_logos = get_fotmob_table_data(lgg)
          st.table(table_indexdf[::-1].reset_index(drop=True).rename(columns={' ':'Pos.'}))
- except:
+except:
      pass
 
 #########################
